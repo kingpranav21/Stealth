@@ -108,7 +108,7 @@ Regenerate the README demo GIF: `npm run demo-gif`
 
 ## Contributing
 
-Bug reports and PRs are welcome: [github.com/pranavahuja/stealth/issues](https://github.com/pranavahuja/stealth/issues)
+Bug reports and PRs are welcome: [github.com/Kingpranav21/stealth/issues](https://github.com/Kingpranav21/stealth/issues)
 
 ## License
 
