@@ -1,26 +1,25 @@
-# Stealth
+# Stealth — GitHub in VS Code & Cursor without `git clone`
 
-Open GitHub repositories in VS Code / Cursor **without a full `git clone`**. Only files you open use meaningful disk space, with a configurable cache cap and LRU eviction.
+Open, browse, edit, and save **GitHub repositories** without a full local clone. Stealth uses a shallow remote index, hydrates only opened files, and caps disk use under `~/.stealth/`.
+
+**Install:** [Open VSX — kingpranav21/stealth](https://open-vsx.org/extension/kingpranav21/stealth) · **Docs:** [github.com/pranavahuja/stealth](https://github.com/pranavahuja/stealth)
 
 ## Features
 
 - Shallow / lazy repo index, on-demand file hydration
-- Save to GitHub via Contents API
-- **Stub Guard** — warns when AI/editors see placeholder stub text, not real code
-- **Disk Governor** — optional Mac-wide cap across all `~/.stealth` workspaces
-- Stealth Dashboard, branch switch, find file, compare/pull, PR link
+- Save to GitHub via Contents API (no local `.git`)
+- **Stub Guard** — warns when editors show stub placeholders instead of real code
+- **Disk Governor** — optional cap across all `~/.stealth` workspaces
+- Dashboard, find file, branch switch, compare/pull, PR link
 
 ## Privacy & data
 
-- Uses the editor’s **GitHub Authentication** (OAuth) to access GitHub APIs for repos you open. Credentials are managed by VS Code/Cursor, not embedded in this extension.
-- Stores repo indexes and cached file content locally under **`~/.stealth/`** on your computer.
-- Contacts **api.github.com** when you browse, open, save, or refresh repositories.
-- **No** Stealth-owned telemetry or analytics servers.
+- Uses the editor’s **GitHub Authentication** (OAuth) for GitHub APIs. Tokens are managed by VS Code/Cursor, not stored in the VSIX.
+- Stores indexes and cached files locally under **`~/.stealth/`**.
+- Contacts **api.github.com** when you browse, open, save, or refresh repos.
+- **No** Stealth-owned telemetry.
 
-## License
+## License & support
 
-MIT — see repository [LICENSE](https://github.com/pranavahuja/stealth/blob/main/LICENSE).
-
-## Support
-
+MIT — [LICENSE](https://github.com/pranavahuja/stealth/blob/main/LICENSE)  
 Issues: https://github.com/pranavahuja/stealth/issues

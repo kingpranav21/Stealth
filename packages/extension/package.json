@@ -17,10 +17,16 @@
   "keywords": [
     "github",
     "cursor",
-    "clone",
-    "remote",
+    "vscode",
+    "vscodium",
+    "open-vsx",
+    "git-clone",
+    "remote-repository",
+    "github-api",
     "cache",
-    "disk"
+    "disk-space",
+    "stub-guard",
+    "no-clone"
   ],
   "engines": {
     "vscode": "^1.85.0"
