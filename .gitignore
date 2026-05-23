@@ -1,25 +1,22 @@
-# Dependencies & installs
+# Dependencies
 node_modules/
 .venv-gif/
 
-# Build & package output
+# Build output
 dist/
 out/
 *.vsix
 
-# Demo recording temp / generated video (GIF in docs/ is committed for README)
+# Demo recording
 .demo-record/
 docs/stealth-demo.webm
 
-# Local / secrets
+# Local
 .env
 .env.*
 .DS_Store
 Thumbs.db
 *.log
-
-# Auto-generated reports (run: npm run dogfood)
-DOGFOOD_REPORT.md
 
 # Python
 __pycache__/

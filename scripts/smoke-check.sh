@@ -33,4 +33,4 @@ for (const c of required) {
 console.log('→ package.json commands OK (v' + pkg.version + ')');
 "
 
-echo "OK — install VSIX in Cursor Extension Host and run SHIP.md checklist."
+echo "OK — install VSIX in Extension Development Host and smoke-test commands."

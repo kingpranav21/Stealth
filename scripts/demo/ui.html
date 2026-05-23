@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stealth demo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #1e1e1e;
+      --sidebar: #252526;
+      --panel: #2d2d2d;
+      --border: #3c3c3c;
+      --text: #cccccc;
+      --muted: #858585;
+      --accent: #2dd4bf;
+      --blue: #3794ff;
+      --green: #89d185;
+      --yellow: #dcdcaa;
+      --orange: #ce9178;
+      --tab-active: #1e1e1e;
+      --status: #007acc;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 720px;
+      width: 1280px;
+      overflow: hidden;
+      user-select: none;
+    }
+    .shell { display: flex; flex-direction: column; height: 100%; }
+    .titlebar {
+      height: 28px;
+      background: #323233;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 12px;
+      color: var(--muted);
+      border-bottom: 1px solid #111;
+    }
+    .titlebar .dots { display: flex; gap: 6px; margin-right: 12px; }
+    .titlebar .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .titlebar .dot.r { background: #ff5f57; }
+    .titlebar .dot.y { background: #febc2e; }
+    .titlebar .dot.g { background: #28c840; }
+    .titlebar .title { flex: 1; text-align: center; }
+    .main { display: flex; flex: 1; min-height: 0; }
+    .activity {
+      width: 48px;
+      background: #333333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 8px;
+      gap: 16px;
+      border-right: 1px solid #111;
+    }
+    .activity .icon {
+      width: 24px; height: 24px; opacity: 0.45;
+      font-size: 18px; text-align: center; line-height: 24px;
+    }
+    .activity .icon.active { opacity: 1; color: #fff; }
+    .sidebar {
+      width: 260px;
+      background: var(--sidebar);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      font-size: 13px;
+    }
+    .sidebar-header {
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .tree { padding: 4px 0; flex: 1; overflow: hidden; }
+    .tree-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px 3px 12px;
+      cursor: default;
+      white-space: nowrap;
+    }
+    .tree-row.indent-1 { padding-left: 24px; }
+    .tree-row.indent-2 { padding-left: 36px; }
+    .tree-row.indent-3 { padding-left: 48px; }
+    .tree-row.selected { background: #094771; }
+    .tree-row.hover { background: #2a2d2e; }
+    .chev { width: 12px; color: var(--muted); font-size: 10px; }
+    .file-icon { color: #519aba; font-size: 14px; }
+    .folder-icon { color: #dcb67a; }
+    .editor-area { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+    .tabs {
+      display: flex;
+      background: #2d2d2d;
+      height: 35px;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 14px;
+      font-size: 13px;
+      color: var(--muted);
+      border-right: 1px solid var(--border);
+      max-width: 200px;
+    }
+    .tab.active { background: var(--tab-active); color: var(--text); border-top: 1px solid var(--accent); }
+    .tab .close { opacity: 0.5; font-size: 11px; }
+    .editor {
+      flex: 1;
+      display: flex;
+      font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.55;
+      overflow: hidden;
+    }
+    .gutter {
+      width: 48px;
+      background: var(--bg);
+      color: #6e7681;
+      text-align: right;
+      padding: 12px 8px;
+      border-right: 1px solid var(--border);
+    }
+    .gutter div { height: 1.55em; }
+    .code { flex: 1; padding: 12px 16px; overflow: hidden; }
+    .code .line { height: 1.55em; white-space: pre; }
+    .kw { color: #569cd6; }
+    .str { color: #ce9178; }
+    .cm { color: #6a9955; }
+    .fn { color: #dcdcaa; }
+    .hl { background: rgba(45, 212, 191, 0.15); display: inline-block; width: 100%; }
+    .statusbar {
+      height: 22px;
+      background: var(--status);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 12px;
+      font-size: 12px;
+      gap: 16px;
+      color: #fff;
+    }
+    .statusbar .stealth {
+      background: rgba(0,0,0,0.2);
+      padding: 0 8px;
+      border-radius: 2px;
+      cursor: default;
+      transition: box-shadow 0.3s;
+    }
+    .statusbar .stealth.glow {
+      box-shadow: 0 0 0 2px var(--accent), 0 0 12px rgba(45,212,191,0.5);
+    }
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 80px;
+      z-index: 50;
+    }
+    .overlay.visible { display: flex; }
+    .palette {
+      width: 560px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+    .palette input {
+      width: 100%;
+      padding: 12px 16px;
+      background: #3c3c3c;
+      border: none;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+    }
+    .palette-item {
+      padding: 8px 16px;
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+    .palette-item.active { background: #094771; }
+    .palette-item .label { color: var(--text); }
+    .palette-item .meta { color: var(--muted); font-size: 11px; margin-top: 2px; }
+    .toast {
+      position: fixed;
+      bottom: 36px;
+      right: 16px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: 4px;
+      font-size: 13px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s, transform 0.25s;
+      z-index: 60;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast .ok { color: var(--green); margin-right: 6px; }
+    .dashboard {
+      position: fixed;
+      top: 28px; right: 0; bottom: 22px;
+      width: 420px;
+      background: var(--sidebar);
+      border-left: 1px solid var(--border);
+      padding: 20px;
+      transform: translateX(100%);
+      transition: transform 0.35s ease;
+      z-index: 40;
+      overflow-y: auto;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .dashboard.open { transform: translateX(0); }
+    .dashboard h1 { font-size: 18px; margin-bottom: 6px; color: var(--accent); }
+    .dashboard h2 {
+      font-size: 13px;
+      margin: 18px 0 8px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    .dashboard .muted { color: var(--muted); font-size: 12px; }
+    .dashboard ul { padding-left: 18px; margin-top: 6px; }
+    .dashboard button {
+      background: #0e639c;
+      border: none;
+      color: #fff;
+      padding: 6px 10px;
+      margin: 4px 4px 4px 0;
+      border-radius: 2px;
+      font-size: 12px;
+    }
+    .dashboard .alert {
+      background: rgba(204, 167, 0, 0.15);
+      border: 1px solid #cca700;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 12px 0;
+      font-size: 12px;
+    }
+    .cursor {
+      position: fixed;
+      width: 18px; height: 18px;
+      pointer-events: none;
+      z-index: 100;
+      transition: left 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                  top 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));
+    }
+    .cursor svg { display: block; }
+    .cursor.click::after {
+      content: "";
+      position: absolute;
+      left: 2px; top: 2px;
+      width: 24px; height: 24px;
+      border: 2px solid rgba(45,212,191,0.8);
+      border-radius: 50%;
+      animation: ripple 0.4s ease-out;
+    }
+    @keyframes ripple {
+      from { transform: scale(0.3); opacity: 1; }
+      to { transform: scale(1.2); opacity: 0; }
+    }
+    .caption {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 70;
+      border: 1px solid rgba(45,212,191,0.4);
+    }
+    .caption.show { opacity: 1; }
+    .empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      gap: 8px;
+    }
+    .empty-state .logo { font-size: 32px; color: var(--accent); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="titlebar">
+      <div class="dots"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+      <div class="title">README.md — stealth-workspace — Cursor</div>
+    </div>
+    <div class="main">
+      <div class="activity">
+        <div class="icon">📁</div>
+        <div class="icon active">🔗</div>
+        <div class="icon">🔍</div>
+      </div>
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">Remote Repository</div>
+        <div class="tree" id="tree">
+          <div class="empty-state" id="treeEmpty">
+            <div class="logo">Stealth</div>
+            <div>Open a GitHub repository to browse</div>
+          </div>
+        </div>
+      </aside>
+      <div class="editor-area">
+        <div class="tabs" id="tabs"></div>
+        <div class="editor" id="editor">
+          <div class="empty-state" id="editorEmpty">
+            <div class="logo">No git clone</div>
+            <div>Files hydrate on demand from GitHub</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="statusbar">
+      <span>main</span>
+      <span>UTF-8</span>
+      <span class="stealth" id="statusStealth">⎇ Stealth — open Dashboard</span>
+    </div>
+  </div>
+
+  <div class="overlay" id="paletteOverlay">
+    <div class="palette">
+      <input id="paletteInput" readonly value="" />
+      <div class="palette-item active" id="paletteItem">
+        <div class="label">Stealth: Open GitHub Repository…</div>
+        <div class="meta">Recently used</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><span class="ok">✓</span> Pushed to GitHub · main</div>
+
+  <aside class="dashboard" id="dashboard">
+    <h1>Stealth Dashboard</h1>
+    <p class="muted">Partial GitHub workspaces with a disk budget.</p>
+    <div class="alert">Stub Guard: 2 stub files in workspace — hydrate before sharing with AI.</div>
+    <h2>Workspace</h2>
+    <p><strong>pranavahuja/stealth</strong> · branch <code>main</code><br>
+    Cache <strong>48 KB</strong> / 256 MB · shallow index · lazy tree</p>
+    <h2>Mac-wide disk (~/.stealth)</h2>
+    <p>124 KB / 512 MB (Disk Governor active)</p>
+    <ul>
+      <li><span style="font-family:monospace">pranavahuja/stealth</span> — 48 KB</li>
+      <li><span style="font-family:monospace">octocat/Hello-World</span> — 76 KB</li>
+    </ul>
+    <h2>GitHub API</h2>
+    <p>4,982 / 5,000 remaining · resets in 42m</p>
+    <h2>Actions</h2>
+    <p>
+      <button>Open repository</button>
+      <button>Find file</button>
+      <button>Hydrate active file</button>
+      <button>Copy for AI</button>
+      <button>Disk Governor</button>
+    </p>
+  </aside>
+
+  <div class="caption" id="caption"></div>
+  <div class="cursor" id="cursor">
+    <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#fff" stroke="#000" stroke-width="1" d="M1 1l5 14 2-5 5-2z"/></svg>
+  </div>
+
+  <script>
+    const treeHtml = `
+      <div class="tree-row indent-1" data-id="src"><span class="chev">▼</span><span class="folder-icon">📁</span> src</div>
+      <div class="tree-row indent-2" data-id="ext"><span class="chev">▼</span><span class="folder-icon">📁</span> extension</div>
+      <div class="tree-row indent-3" data-id="readme"><span class="chev"></span><span class="file-icon">📄</span> README.md</div>
+      <div class="tree-row indent-1" data-id="pkg"><span class="chev"></span><span class="file-icon">📄</span> package.json</div>
+    `;
+
+    const readmeLines = [
+      ['<span class="cm"># Stealth</span>'],
+      [''],
+      ['Open a GitHub repo in Cursor <span class="kw">without</span> <span class="str">git clone</span>.'],
+      ['Only files you open use disk — capped by <span class="fn">stealth.cacheMaxMb</span>.'],
+      [''],
+      ['<span class="cm">## Quick start</span>'],
+      ['1. Stealth: Sign in to GitHub'],
+      ['2. Stealth: Open GitHub Repository…'],
+    ];
+
+    const cursor = document.getElementById('cursor');
+    const caption = document.getElementById('caption');
+
+    function moveCursor(x, y, click) {
+      return new Promise((resolve) => {
+        cursor.style.left = x + 'px';
+        cursor.style.top = y + 'px';
+        setTimeout(() => {
+          if (click) {
+            cursor.classList.add('click');
+            setTimeout(() => { cursor.classList.remove('click'); resolve(); }, 400);
+          } else resolve();
+        }, 580);
+      });
+    }
+
+    function showCaption(text) {
+      caption.textContent = text;
+      caption.classList.add('show');
+    }
+    function hideCaption() { caption.classList.remove('show'); }
+
+    function typePalette(text, msPerChar) {
+      const input = document.getElementById('paletteInput');
+      input.value = '';
+      let i = 0;
+      return new Promise((resolve) => {
+        const tick = () => {
+          if (i <= text.length) {
+            input.value = text.slice(0, i);
+            i++;
+            setTimeout(tick, msPerChar);
+          } else resolve();
+        };
+        tick();
+      });
+    }
+
+    function showEditor() {
+      document.getElementById('editorEmpty').style.display = 'none';
+      const editor = document.getElementById('editor');
+      editor.innerHTML = `
+        <div class="gutter">${readmeLines.map((_, i) => `<div>${i + 1}</div>`).join('')}</div>
+        <div class="code" id="code">${readmeLines.map(l => `<div class="line">${l.join('') || '&nbsp;'}</div>`).join('')}</div>
+      `;
+      document.getElementById('tabs').innerHTML =
+        '<div class="tab active"><span class="file-icon">📄</span> README.md <span class="close">×</span></div>';
+    }
+
+    window.demo = {
+      async play(step) {
+        hideCaption();
+        switch (step) {
+          case 'palette':
+            showCaption('Open any GitHub repo — no clone');
+            document.getElementById('paletteOverlay').classList.add('visible');
+            await moveCursor(640, 120);
+            await typePalette('Stealth: Open GitHub Repository', 45);
+            await moveCursor(640, 175, true);
+            break;
+          case 'openRepo':
+            document.getElementById('paletteOverlay').classList.remove('visible');
+            document.getElementById('treeEmpty').outerHTML = treeHtml;
+            document.getElementById('statusStealth').textContent =
+              '⎇ Stealth: pranavahuja/stealth | 12 KB/256 MB | API 4998';
+            showCaption('Shallow index · lazy folders');
+            await moveCursor(130, 200);
+            break;
+          case 'expandTree':
+            await moveCursor(130, 240);
+            await moveCursor(130, 280, true);
+            break;
+          case 'openFile':
+            const row = document.querySelector('[data-id="readme"]');
+            row.classList.add('selected');
+            showEditor();
+            showCaption('Hydrate on demand — only opened files hit disk');
+            await moveCursor(130, 320, true);
+            break;
+          case 'edit':
+            showCaption('Edit like a normal file');
+            const lines = document.querySelectorAll('#code .line');
+            lines[3].innerHTML = '<span class="hl">Only files you <strong>open</strong> use disk — capped cache.</span>';
+            await moveCursor(520, 200);
+            break;
+          case 'save':
+            showCaption('Cmd+S pushes to GitHub');
+            document.getElementById('toast').classList.add('show');
+            await moveCursor(900, 400);
+            setTimeout(() => document.getElementById('toast').classList.remove('show'), 2200);
+            break;
+          case 'statusBar':
+            hideCaption();
+            const sb = document.getElementById('statusStealth');
+            sb.classList.add('glow');
+            await moveCursor(1050, 705, true);
+            break;
+          case 'dashboard':
+            document.getElementById('dashboard').classList.add('open');
+            showCaption('Dashboard · Disk Governor · API quota · Stub Guard');
+            await moveCursor(980, 280);
+            await moveCursor(980, 420);
+            break;
+          case 'end':
+            hideCaption();
+            document.getElementById('dashboard').classList.remove('open');
+            document.getElementById('statusStealth').classList.remove('glow');
+            showCaption('Stealth — Open VSX · MIT');
+            break;
+        }
+      }
+    };
+  </script>
+</body>
+</html>
