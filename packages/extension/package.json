@@ -1,0 +1,429 @@
+{
+  "name": "stealth",
+  "displayName": "Stealth",
+  "description": "Open GitHub repos in Cursor without a full clone — only opened files use disk.",
+  "version": "0.10.1",
+  "publisher": "kingpranav21",
+  "icon": "icon.png",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pranavahuja/stealth"
+  },
+  "homepage": "https://github.com/pranavahuja/stealth#readme",
+  "bugs": {
+    "url": "https://github.com/pranavahuja/stealth/issues"
+  },
+  "keywords": [
+    "github",
+    "cursor",
+    "clone",
+    "remote",
+    "cache",
+    "disk"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "SCM Providers"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "workspaceContains:.stealth/config.json"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "stealth.openRepository",
+        "title": "Open GitHub Repository…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.refreshIndex",
+        "title": "Refresh Remote Index",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.signIn",
+        "title": "Sign in to GitHub",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.browseFiles",
+        "title": "Browse Remote Files…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.findFile",
+        "title": "Find File…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.openOnGitHub",
+        "title": "Open on GitHub.com",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.openInGithubDev",
+        "title": "Open in github.dev",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.recentCommits",
+        "title": "Recent Commits on Branch",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.toggleBlameGutter",
+        "title": "Toggle Blame Annotations",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.compareWithRemote",
+        "title": "Compare with GitHub",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.pullFromGitHub",
+        "title": "Pull from GitHub",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.openPullRequests",
+        "title": "Open Pull Requests on GitHub",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.createPullRequest",
+        "title": "Create Pull Request…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.diskGovernor",
+        "title": "Disk Governor (All Repos)…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.hydrateActiveFile",
+        "title": "Hydrate Active File from GitHub",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.copyForAi",
+        "title": "Copy Hydrated File for AI",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.dashboard",
+        "title": "Stealth Dashboard",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.switchWorkspace",
+        "title": "Switch Stealth Workspace…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.pinWorkspaceCache",
+        "title": "Pin Workspace Cache",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.focusRemoteView",
+        "title": "Show Remote Repository",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.reloadWorkspace",
+        "title": "Reload Stealth Workspace",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.pushToGitHub",
+        "title": "Push to GitHub",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.deleteRemoteFile",
+        "title": "Delete Remote File on GitHub",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.newRemoteFile",
+        "title": "New Remote File…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.renameRemoteFile",
+        "title": "Rename Remote File on GitHub…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.cacheActions",
+        "title": "Cache Actions…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.evictCache",
+        "title": "Evict Cache Now",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.switchBranch",
+        "title": "Switch Branch…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.createBranch",
+        "title": "Create Branch…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.hub",
+        "title": "Stealth Menu…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.pinFile",
+        "title": "Pin File (Never Evict)",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.unpinFile",
+        "title": "Unpin File",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.openInCodespace",
+        "title": "Open in GitHub Codespace…",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.deepIndex",
+        "title": "Deep Index (Full Tree)",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.fileHistory",
+        "title": "File History",
+        "category": "Stealth"
+      },
+      {
+        "command": "stealth.fileBlame",
+        "title": "File Blame",
+        "category": "Stealth"
+      }
+    ],
+    "configuration": {
+      "title": "Stealth",
+      "properties": {
+        "stealth.promptCommitMessage": {
+          "type": "boolean",
+          "default": false,
+          "description": "Ask for a commit message each time you save to GitHub."
+        },
+        "stealth.cacheMaxMb": {
+          "type": "number",
+          "default": 500,
+          "minimum": 1,
+          "description": "Maximum disk space (MB) for hydrated file contents in a Stealth workspace."
+        },
+        "stealth.pinnedPaths": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "Repo-relative paths never evicted from cache (e.g. src/main.ts)."
+        },
+        "stealth.maxExplorerStubs": {
+          "type": "number",
+          "default": 500,
+          "minimum": 50,
+          "description": "Max files to mirror as Explorer stubs. Above this, Stealth uses lazy folder loading instead."
+        },
+        "stealth.indexMode": {
+          "type": "string",
+          "enum": ["shallow", "full"],
+          "default": "shallow",
+          "description": "shallow = one API call at open (expand folders on demand). full = recursive tree walk (slower, complete file list)."
+        },
+        "stealth.checkRemoteBeforeSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Before save, warn if the file changed on GitHub since you loaded it."
+        },
+        "stealth.rateLimitWarnAt": {
+          "type": "number",
+          "default": 100,
+          "minimum": 10,
+          "description": "Warn before GitHub API calls when remaining core quota is at or below this value."
+        },
+        "stealth.globalCacheMaxMb": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "description": "Mac-wide cap for all Stealth workspaces under ~/.stealth (0 = disabled). Uses global LRU eviction."
+        },
+        "stealth.stubGuard": {
+          "type": "boolean",
+          "default": true,
+          "description": "Warn when the active editor is a stub file — AI and search see placeholder text, not real code."
+        },
+        "stealth.bloatBlocklist": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [
+            "**/node_modules/**",
+            "**/.git/**",
+            "**/dist/**",
+            "**/build/**",
+            "**/.next/**",
+            "**/vendor/**",
+            "**/*.min.js",
+            "**/package-lock.json",
+            "**/yarn.lock",
+            "**/pnpm-lock.yaml"
+          ],
+          "description": "Paths Stealth will never hydrate (saves disk and avoids junk AI context)."
+        }
+      }
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "stealth.remoteFiles",
+          "name": "Remote Repository"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "stealth.refreshIndex",
+          "when": "view == stealth.remoteFiles",
+          "group": "navigation"
+        },
+        {
+          "command": "stealth.newRemoteFile",
+          "when": "view == stealth.remoteFiles",
+          "group": "navigation"
+        },
+        {
+          "command": "stealth.switchBranch",
+          "when": "stealth.isRemoteWorkspace",
+          "group": "navigation@1"
+        },
+        {
+          "command": "stealth.createBranch",
+          "when": "stealth.isRemoteWorkspace",
+          "group": "navigation@1"
+        },
+        {
+          "command": "stealth.deepIndex",
+          "when": "view == stealth.remoteFiles",
+          "group": "navigation"
+        },
+        {
+          "command": "stealth.findFile",
+          "when": "view == stealth.remoteFiles",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "stealth.pinFile",
+          "when": "stealth.isRemoteWorkspace && resourceScheme == file && !resourceIsFolder",
+          "group": "7_modification"
+        },
+        {
+          "command": "stealth.unpinFile",
+          "when": "stealth.isRemoteWorkspace && resourceScheme == file && !resourceIsFolder",
+          "group": "7_modification"
+        },
+        {
+          "command": "stealth.renameRemoteFile",
+          "when": "stealth.isRemoteWorkspace && resourceScheme == file && !resourceIsFolder",
+          "group": "7_modification"
+        },
+        {
+          "command": "stealth.deleteRemoteFile",
+          "when": "stealth.isRemoteWorkspace && resourceScheme == file && !resourceIsFolder",
+          "group": "7_modification"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "stealth.pinFile",
+          "when": "stealth.isRemoteWorkspace",
+          "group": "stealth@1"
+        },
+        {
+          "command": "stealth.unpinFile",
+          "when": "stealth.isRemoteWorkspace",
+          "group": "stealth@1"
+        },
+        {
+          "command": "stealth.fileHistory",
+          "when": "stealth.isRemoteWorkspace",
+          "group": "stealth@2"
+        },
+        {
+          "command": "stealth.fileBlame",
+          "when": "stealth.isRemoteWorkspace",
+          "group": "stealth@2"
+        },
+        {
+          "command": "stealth.openOnGitHub",
+          "when": "stealth.isRemoteWorkspace",
+          "group": "stealth@3"
+        },
+        {
+          "command": "stealth.openInGithubDev",
+          "when": "stealth.isRemoteWorkspace",
+          "group": "stealth@3"
+        },
+        {
+          "command": "stealth.toggleBlameGutter",
+          "when": "stealth.isRemoteWorkspace",
+          "group": "stealth@2"
+        },
+        {
+          "command": "stealth.compareWithRemote",
+          "when": "stealth.isRemoteWorkspace",
+          "group": "stealth@3"
+        },
+        {
+          "command": "stealth.pullFromGitHub",
+          "when": "stealth.isRemoteWorkspace",
+          "group": "stealth@3"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "stealth.findFile",
+        "key": "ctrl+alt+f",
+        "mac": "cmd+alt+f",
+        "when": "stealth.isRemoteWorkspace"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "package": "vsce package --no-dependencies --allow-missing-repository",
+    "vscode:prepublish": "npm run build"
+  },
+  "dependencies": {
+    "@stealth/shared": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.3.2",
+    "esbuild": "^0.25.4",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "stealth-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace @stealth/shared && npm run build --workspace stealth",
+    "watch": "npm run watch --workspace stealth",
+    "package": "npm run build && npm run package --workspace=stealth",
+    "smoke": "bash scripts/smoke-check.sh",
+    "dogfood": "node scripts/dogfood-report.mjs",
+    "demo-gif": ".venv-gif/bin/python scripts/generate-demo-gif.py || python3 scripts/generate-demo-gif.py",
+    "publish:openvsx": "bash scripts/publish-openvsx.sh"
+  }
+}

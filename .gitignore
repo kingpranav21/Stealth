@@ -1,0 +1,8 @@
+.venv-gif/
+node_modules/
+dist/
+out/
+*.vsix
+.DS_Store
+.env
+.env.*

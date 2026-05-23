@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Stealth Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/packages/extension"
+      ],
+      "outFiles": ["${workspaceFolder}/packages/extension/dist/**/*.js"]
+    },
+    {
+      "name": "Run Stealth + Hello-World workspace",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/packages/extension",
+        "${env:HOME}/.stealth/workspaces/octocat-Hello-World-master"
+      ],
+      "outFiles": ["${workspaceFolder}/packages/extension/dist/**/*.js"]
+    }
+  ]
+}
