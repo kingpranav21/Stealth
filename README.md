@@ -243,6 +243,7 @@ Optional: `STEALTH_SMOKE=1 npm test` then `npm run smoke` for a release VSIX che
 
 Bug reports and PRs are welcome: [github.com/kingpranav21/stealth/issues](https://github.com/kingpranav21/stealth/issues)
 
+##new edit
 ## License
 
 [MIT](LICENSE) © contributors
