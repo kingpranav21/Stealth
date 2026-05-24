@@ -1,8 +1,8 @@
 {
-  "name": "stealth",
-  "displayName": "Stealth",
+  "name": "stealth-github",
+  "displayName": "Stealth GitHub",
   "description": "Open GitHub repos in VS Code without a full clone — only opened files use disk.",
-  "version": "0.10.2",
+  "version": "0.12.1",
   "publisher": "kingpranav21",
   "icon": "icon.png",
   "license": "MIT",
@@ -44,186 +44,201 @@
       {
         "command": "stealth.openRepository",
         "title": "Open GitHub Repository…",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.refreshIndex",
         "title": "Refresh Remote Index",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.signIn",
         "title": "Sign in to GitHub",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.browseFiles",
         "title": "Browse Remote Files…",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.findFile",
         "title": "Find File…",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.openOnGitHub",
         "title": "Open on GitHub.com",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.openInGithubDev",
         "title": "Open in github.dev",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.recentCommits",
         "title": "Recent Commits on Branch",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.toggleBlameGutter",
         "title": "Toggle Blame Annotations",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.compareWithRemote",
         "title": "Compare with GitHub",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.pullFromGitHub",
         "title": "Pull from GitHub",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.openPullRequests",
         "title": "Open Pull Requests on GitHub",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.createPullRequest",
         "title": "Create Pull Request…",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.diskGovernor",
         "title": "Disk Governor (All Repos)…",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.hydrateActiveFile",
         "title": "Hydrate Active File from GitHub",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.copyForAi",
         "title": "Copy Hydrated File for AI",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.dashboard",
-        "title": "Stealth Dashboard",
-        "category": "Stealth"
+        "title": "Dashboard",
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.switchWorkspace",
-        "title": "Switch Stealth Workspace…",
-        "category": "Stealth"
+        "title": "Switch Workspace…",
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.pinWorkspaceCache",
         "title": "Pin Workspace Cache",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.focusRemoteView",
         "title": "Show Remote Repository",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.reloadWorkspace",
-        "title": "Reload Stealth Workspace",
-        "category": "Stealth"
+        "title": "Reload Workspace",
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.pushToGitHub",
         "title": "Push to GitHub",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.deleteRemoteFile",
         "title": "Delete Remote File on GitHub",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.newRemoteFile",
         "title": "New Remote File…",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.renameRemoteFile",
         "title": "Rename Remote File on GitHub…",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.cacheActions",
         "title": "Cache Actions…",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.evictCache",
         "title": "Evict Cache Now",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.switchBranch",
         "title": "Switch Branch…",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.createBranch",
         "title": "Create Branch…",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.hub",
-        "title": "Stealth Menu…",
-        "category": "Stealth"
+        "title": "Menu…",
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.pinFile",
         "title": "Pin File (Never Evict)",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.unpinFile",
         "title": "Unpin File",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.openInCodespace",
         "title": "Open in GitHub Codespace…",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.deepIndex",
         "title": "Deep Index (Full Tree)",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.fileHistory",
         "title": "File History",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
       },
       {
         "command": "stealth.fileBlame",
         "title": "File Blame",
-        "category": "Stealth"
+        "category": "Stealth GitHub"
+      },
+      {
+        "command": "stealth.activateLicense",
+        "title": "Activate License Key…",
+        "category": "Stealth GitHub"
+      },
+      {
+        "command": "stealth.manageSubscription",
+        "title": "Upgrade to Pro…",
+        "category": "Stealth GitHub"
+      },
+      {
+        "command": "stealth.licenseStatus",
+        "title": "License Status",
+        "category": "Stealth GitHub"
       }
     ],
     "configuration": {
-      "title": "Stealth",
+      "title": "Stealth GitHub",
       "properties": {
         "stealth.promptCommitMessage": {
           "type": "boolean",
@@ -275,6 +290,39 @@
           "type": "boolean",
           "default": true,
           "description": "Warn when the active editor is a stub file — AI and search see placeholder text, not real code."
+        },
+        "stealth.licensing.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable free trial and Pro license checks for open repo, push, and related actions."
+        },
+        "stealth.licensing.provider": {
+          "type": "string",
+          "enum": ["lemonsqueezy", "proxy"],
+          "default": "lemonsqueezy",
+          "description": "lemonsqueezy = validate keys with Lemon Squeezy (no custom server). proxy = POST to stealth.licenseApiUrl."
+        },
+        "stealth.trialDays": {
+          "type": "number",
+          "default": 14,
+          "minimum": 0,
+          "description": "Length of the free trial in days (per machine). Set to 0 to skip trial and require a license immediately."
+        },
+        "stealth.licenseApiUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Base URL of your license API (extension POSTs to {url}/validate). Required to activate keys after purchase."
+        },
+        "stealth.checkoutUrl": {
+          "type": "string",
+          "default": "https://stealth-github-pro.lemonsqueezy.com/checkout/buy/7f8803b4-d9c5-4788-92a7-356b0fb2d12b",
+          "description": "Lemon Squeezy checkout page opened by Upgrade to Pro."
+        },
+        "stealth.licensing.revalidateHours": {
+          "type": "number",
+          "default": 24,
+          "minimum": 1,
+          "description": "Re-check the license key with your server after this many hours."
         },
         "stealth.bloatBlocklist": {
           "type": "array",

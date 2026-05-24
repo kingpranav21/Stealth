@@ -3,6 +3,7 @@ import * as path from "path";
 import * as vscode from "vscode";
 import { CONFIG_FILE, STEALTH_DIR } from "@stealth/shared";
 import { workspacesDir } from "../paths";
+import { requireProAccess } from "../licensing/access";
 
 interface WorkspacePick extends vscode.QuickPickItem {
   root: string;
@@ -10,6 +11,10 @@ interface WorkspacePick extends vscode.QuickPickItem {
 
 /** Open a previous Stealth workspace under ~/.stealth/workspaces */
 export async function switchStealthWorkspace(): Promise<void> {
+  if (!(await requireProAccess("switching workspaces"))) {
+    return;
+  }
+
   const root = workspacesDir();
   let dirs: string[] = [];
   try {

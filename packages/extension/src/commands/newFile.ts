@@ -4,10 +4,15 @@ import * as fs from "fs/promises";
 import { updateIndexEntrySha } from "../index/store";
 import { getActiveStealthConfig } from "../workspace/config";
 import type { RemoteTreeProvider } from "../tree/remoteTreeProvider";
+import { requireProAccess } from "../licensing/access";
 
 export async function newRemoteFile(
   treeProvider?: RemoteTreeProvider
 ): Promise<void> {
+  if (!(await requireProAccess("creating files on GitHub"))) {
+    return;
+  }
+
   const active = await getActiveStealthConfig();
   if (!active) {
     void vscode.window.showWarningMessage("Open a Stealth workspace first.");

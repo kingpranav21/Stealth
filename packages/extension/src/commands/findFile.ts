@@ -4,6 +4,7 @@ import { getGitHubToken } from "../auth";
 import { loadIndexByPath } from "../index/store";
 import { getActiveStealthConfig } from "../workspace/config";
 import { openRemoteFile } from "./openFile";
+import { requireProAccess } from "../licensing/access";
 
 type FilePick = vscode.QuickPickItem & { path: string };
 
@@ -38,6 +39,10 @@ function localMatches(
  * Replaces the old shallow "type full path" flow.
  */
 export async function findRemoteFile(): Promise<void> {
+  if (!(await requireProAccess("finding and opening files"))) {
+    return;
+  }
+
   const active = await getActiveStealthConfig();
   if (!active) {
     void vscode.window.showErrorMessage(

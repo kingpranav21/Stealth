@@ -44,12 +44,23 @@ import {
   focusRemoteFilesView,
   registerRemoteTree,
 } from "./tree/remoteTreeProvider";
+import { registerLicensingCommands } from "./licensing/commands";
+import { ensureTrialStarted } from "./licensing/store";
+import { getLicensingConfig } from "./licensing/config";
+import { hasProAccess } from "./licensing/access";
+import { maybeNotifyTrialExpired } from "./licensing/notify";
 
 function scheduleHydrate(doc: vscode.TextDocument, reveal: boolean): void {
-  void hydrateDocumentIfStub(doc, { silent: true, reveal });
+  void (async () => {
+    if (!(await hasProAccess())) {
+      return;
+    }
+    await hydrateDocumentIfStub(doc, { silent: true, reveal });
+  })();
 }
 
 export function activate(context: vscode.ExtensionContext): void {
+  registerLicensingCommands(context);
   const treeProvider = registerRemoteTree(context);
   createStatusBar(context);
   registerBlameGutter(context);
@@ -191,6 +202,10 @@ export function activate(context: vscode.ExtensionContext): void {
   );
 
   void (async () => {
+    if (getLicensingConfig().enabled) {
+      await ensureTrialStarted(context);
+      await maybeNotifyTrialExpired(context);
+    }
     await reload();
     const active = await getActiveStealthConfig();
     if (active && (treeProvider.entryCount > 0 || active.config.lazyTree)) {

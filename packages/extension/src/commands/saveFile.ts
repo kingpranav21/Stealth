@@ -34,6 +34,7 @@ import { refreshDashboardIfOpen } from "../dashboard/panel";
 import type { RemoteTreeProvider } from "../tree/remoteTreeProvider";
 import { hydrateRemoteFile } from "./openFile";
 import { confirmSaveIfRemoteChanged } from "./compare";
+import { requireProAccess } from "../licensing/access";
 
 const savingPaths = new Set<string>();
 
@@ -61,6 +62,10 @@ export async function saveRemoteFile(
   document: vscode.TextDocument,
   options?: { commitMessage?: string }
 ): Promise<boolean> {
+  if (!(await requireProAccess("saving to GitHub"))) {
+    return false;
+  }
+
   const active = await getActiveStealthConfig();
   if (!active || document.uri.scheme !== "file") {
     return false;
@@ -202,6 +207,10 @@ export async function deleteRemoteFile(
   relativePath: string,
   treeProvider?: RemoteTreeProvider
 ): Promise<void> {
+  if (!(await requireProAccess("deleting files on GitHub"))) {
+    return;
+  }
+
   const active = await getActiveStealthConfig();
   if (!active || isStealthInternalPath(relativePath)) {
     return;

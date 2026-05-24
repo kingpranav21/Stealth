@@ -39,7 +39,7 @@ export class StealthDashboardPanel {
 
     const panel = vscode.window.createWebviewPanel(
       "stealthDashboard",
-      "Stealth Dashboard",
+      "Stealth GitHub Dashboard",
       vscode.ViewColumn.One,
       { enableScripts: true, retainContextWhenHidden: true }
     );
@@ -89,7 +89,7 @@ export class StealthDashboardPanel {
     const globalMax = getGlobalCacheMaxBytes();
     const quota = getRateLimitState();
 
-    let workspaceBlock = "<p>No Stealth workspace open.</p>";
+    let workspaceBlock = "<p>No workspace open.</p>";
     let stubAlert = "";
 
     if (active) {
@@ -164,7 +164,7 @@ export class StealthDashboardPanel {
   </style>
 </head>
 <body>
-  <h1>Stealth Dashboard</h1>
+  <h1>Stealth GitHub Dashboard</h1>
   <p class="muted">Partial GitHub workspaces with a disk budget — built for many repos and honest AI context.</p>
   ${stubAlert}
   ${workspaceBlock}

@@ -15,6 +15,8 @@ import {
 import { getActiveStealthConfig } from "./workspace/config";
 import { loadIndexByPath } from "./index/store";
 import { refreshDashboardIfOpen } from "./dashboard/panel";
+import { getAccessState } from "./licensing/access";
+import { getLicensingConfig } from "./licensing/config";
 
 let item: vscode.StatusBarItem | undefined;
 let refreshTimer: ReturnType<typeof setTimeout> | undefined;
@@ -24,7 +26,7 @@ export function createStatusBar(context: vscode.ExtensionContext): void {
     vscode.StatusBarAlignment.Right,
     200
   );
-  item.name = "Stealth";
+  item.name = "Stealth GitHub";
   item.command = "stealth.dashboard";
   context.subscriptions.push(item);
   void updateStatusBar();
@@ -48,10 +50,12 @@ export async function updateStatusBar(options?: {
     return;
   }
 
+  const licenseSeg = await formatLicenseSegment();
+
   const active = await getActiveStealthConfig();
   if (!active) {
-    item.text = "$(github) Stealth — open Dashboard";
-    item.tooltip = "No Stealth workspace.\nClick for Dashboard or Open Repository.";
+    item.text = `$(github) Stealth GitHub — open Dashboard${licenseSeg}`;
+    item.tooltip = `No workspace open.\nClick for Dashboard or Open Repository.${licenseSeg ? `\n${licenseSeg.trim()}` : ""}`;
     item.command = "stealth.dashboard";
     item.show();
     return;
@@ -81,14 +85,32 @@ export async function updateStatusBar(options?: {
   const pinned = active.config.cachePinned ? " $(pin)" : "";
   const api = formatRateLimitShort();
   const apiSegment = api ? ` | API ${api}` : " | API …";
-  item.text = `$(github) Stealth: ${owner}/${repo} | ${formatBytes(used)}/${formatBytes(max)}${apiSegment}${pinned}`;
+  item.text = `$(github) Stealth GitHub: ${owner}/${repo} | ${formatBytes(used)}/${formatBytes(max)}${apiSegment}${licenseSeg}${pinned}`;
 
   const mode = active.config.lazyTree ? "lazy tree" : `${count} files indexed`;
   const quota = getRateLimitState();
   const apiLine = quota
     ? `\n${formatRateLimitTooltip()}`
     : "\nSign in to GitHub to see API quota.";
-  item.tooltip = `${mode} on ${branch}${apiLine}${active.config.cachePinned ? "\nCache pinned for this workspace" : ""}\nClick for Stealth Dashboard`;
+  const licenseLine = licenseSeg ? `\n${licenseSeg.trim()}` : "";
+  item.tooltip = `${mode} on ${branch}${apiLine}${licenseLine}${active.config.cachePinned ? "\nCache pinned for this workspace" : ""}\nClick for Dashboard`;
   item.show();
   refreshDashboardIfOpen();
+}
+
+async function formatLicenseSegment(): Promise<string> {
+  if (!getLicensingConfig().enabled) {
+    return "";
+  }
+  const state = await getAccessState();
+  if (state.tier === "licensed") {
+    return " | Pro";
+  }
+  if (state.tier === "trial" && state.daysLeft !== undefined) {
+    return ` | Trial ${state.daysLeft}d`;
+  }
+  if (state.tier === "expired") {
+    return " | Trial ended";
+  }
+  return "";
 }

@@ -10,7 +10,7 @@ export async function maybeShowWelcome(
   }
 
   const choice = await vscode.window.showInformationMessage(
-    "Stealth opens GitHub repos without a full clone — capped disk, Stub Guard for AI, and a global Disk Governor.",
+    "Stealth GitHub opens GitHub repos without a full clone — capped disk, Stub Guard for AI, and a global Disk Governor.",
     "Open Dashboard",
     "Open Repository",
     "Later"

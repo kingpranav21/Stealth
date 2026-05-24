@@ -5,6 +5,7 @@ import { getActiveStealthConfig } from "../workspace/config";
 import { applyIndexToWorkspace } from "../workspace/applyIndex";
 import { reloadStealthWorkspace } from "../workspace/reload";
 import type { RemoteTreeProvider } from "../tree/remoteTreeProvider";
+import { requireProAccess } from "../licensing/access";
 
 /**
  * Walk the full git tree (recursive) and rebuild the index.
@@ -13,6 +14,10 @@ import type { RemoteTreeProvider } from "../tree/remoteTreeProvider";
 export async function runDeepIndex(
   treeProvider?: RemoteTreeProvider
 ): Promise<void> {
+  if (!(await requireProAccess("deep indexing"))) {
+    return;
+  }
+
   const active = await getActiveStealthConfig();
   if (!active) {
     void vscode.window.showErrorMessage("No Stealth workspace is open.");

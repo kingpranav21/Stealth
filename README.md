@@ -1,11 +1,11 @@
-# Stealth — GitHub repos in VS Code without `git clone`
+# Stealth GitHub — GitHub repos in VS Code without `git clone`
 
-[![Open VSX version](https://img.shields.io/open-vsx/v/kingpranav21/stealth?label=Open%20VSX)](https://open-vsx.org/extension/kingpranav21/stealth)
-[![Open VSX downloads](https://img.shields.io/badge/dynamic/json?url=https://open-vsx.org/api/kingpranav21/stealth&query=%24.downloadCount&label=downloads&logo=open-vsx&labelColor=555&color=2dd4bf&cacheSeconds=300)](https://open-vsx.org/extension/kingpranav21/stealth)
+[![Open VSX version](https://img.shields.io/open-vsx/v/kingpranav21/stealth-github?label=Open%20VSX)](https://open-vsx.org/extension/kingpranav21/stealth-github)
+[![Open VSX downloads](https://img.shields.io/badge/dynamic/json?url=https://open-vsx.org/api/kingpranav21/stealth-github&query=%24.downloadCount&label=downloads&logo=open-vsx&labelColor=555&color=2dd4bf&cacheSeconds=300)](https://open-vsx.org/extension/kingpranav21/stealth-github)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.85-0098FF?logo=visualstudiocode&logoColor=white)](https://code.visualstudio.com/)
 
-**Stealth** is a [VS Code](https://code.visualstudio.com/) extension that lets you **open, browse, edit, and save GitHub repositories without a full local clone**. It builds a shallow remote index, hydrates only the files you open, and enforces a disk budget under `~/.stealth/` — built for limited SSD space, many repos, and fast “open and fix” workflows.
+**Stealth GitHub** is a [VS Code](https://code.visualstudio.com/) extension that lets you **open, browse, edit, and save GitHub repositories without a full local clone**. It builds a shallow remote index, hydrates only the files you open, and enforces a disk budget under `~/.stealth/` — built for limited SSD space, many repos, and fast “open and fix” workflows.
 
 Works in **VS Code**, **VSCodium**, and other editors that use the [Open VSX](https://open-vsx.org/) marketplace.
 
@@ -16,6 +16,7 @@ Works in **VS Code**, **VSCodium**, and other editors that use the [Open VSX](ht
 - [Why Stealth](#why-stealth)
 - [Install](#install)
 - [How to use (after install)](#how-to-use-after-install)
+- [Pro & 14-day trial](#pro--14-day-trial)
 - [Features](#features)
 - [Settings](#settings)
 - [Stealth vs git clone](#stealth-vs-git-clone)
@@ -40,11 +41,11 @@ Use Stealth when you need **lightweight GitHub editing** on your machine. Use a 
 ### Open VSX (recommended for VSCodium and VS Code–compatible editors)
 
 1. Open **Extensions** (`Cmd+Shift+X` / `Ctrl+Shift+X`)
-2. Search **`Stealth`**
-3. Install **[kingpranav21.stealth](https://open-vsx.org/extension/kingpranav21/stealth)**
+2. Search **`Stealth GitHub`**
+3. Install **[kingpranav21.stealth-github](https://open-vsx.org/extension/kingpranav21/stealth-github)**
 
 Or install from the registry page:  
-https://open-vsx.org/extension/kingpranav21/stealth
+https://open-vsx.org/extension/kingpranav21/stealth-github
 
 ### Build from source
 
@@ -55,7 +56,7 @@ npm install
 npm run package
 ```
 
-In the editor: **Cmd+Shift+P** → **Extensions: Install from VSIX…** → select `packages/extension/stealth-*.vsix` → **Reload Window**.
+In the editor: **Cmd+Shift+P** → **Extensions: Install from VSIX…** → select `packages/extension/stealth-github-*.vsix` → **Reload Window**.
 
 ## How to use (after install)
 
@@ -63,22 +64,22 @@ In the editor: **Cmd+Shift+P** → **Extensions: Install from VSIX…** → sele
 
 **Cmd+Shift+P** → **Developer: Reload Window** after installing.
 
-Use only **one** Stealth install (Open VSX **or** a local VSIX/dev build — not both).
+Use only **one** Stealth GitHub install (Open VSX **or** a local VSIX/dev build — not both).
 
 ### 2. Sign in
 
-**Cmd+Shift+P** → **`Stealth: Sign in to GitHub`**
+**Cmd+Shift+P** → **`Stealth GitHub: Sign in to GitHub`**
 
 ### 3. Open a repo
 
-**Cmd+Shift+P** → **`Stealth: Open GitHub Repository…`**
+**Cmd+Shift+P** → **`Stealth GitHub: Open GitHub Repository…`**
 
 Enter `owner/repo` (e.g. `kingpranav21/stealth`). You need **push access** to save.
 
 ### 4. Browse and open files
 
 - Sidebar → **Remote Repository**  
-- Or **Stealth: Find File…** (`Cmd+Alt+F`)
+- Or **Stealth GitHub: Find File…** (`Cmd+Alt+F`)
 
 Files load from GitHub on first open (hydration). Stubs in Explorer are replaced when you open them.
 
@@ -88,19 +89,41 @@ Edit → **Cmd+S** / **Ctrl+S** → wait for **“Pushed to GitHub”**.
 
 ### 6. Dashboard
 
-Click **Stealth** in the **status bar** (bottom-right) or run **`Stealth: Stealth Dashboard`**.
+Click **Stealth GitHub** in the **status bar** (bottom-right) or run **`Stealth GitHub: Dashboard`**.
 
 ### Command cheat sheet
 
 | Action | Command palette |
 |--------|-----------------|
-| Open repo | `Stealth: Open GitHub Repository…` |
-| Find file | `Stealth: Find File…` |
-| Reload file from GitHub | `Stealth: Hydrate Active File from GitHub` |
-| All commands | `Stealth: Stealth Menu…` |
-| Disk / cache | `Stealth: Cache Actions…` or Dashboard |
+| Open repo | `Stealth GitHub: Open GitHub Repository…` |
+| Find file | `Stealth GitHub: Find File…` |
+| Reload file from GitHub | `Stealth GitHub: Hydrate Active File from GitHub` |
+| All commands | `Stealth GitHub: Menu…` |
+| Disk / cache | `Stealth GitHub: Cache Actions…` or Dashboard |
+| Upgrade / license | `Stealth GitHub: Upgrade to Pro…` / **Activate License Key** |
 
 Full walkthrough (same as Open VSX listing): [packages/extension/README.md](./packages/extension/README.md)
+
+> **Older listing:** The extension was renamed on Open VSX to **[kingpranav21.stealth-github](https://open-vsx.org/extension/kingpranav21/stealth-github)**. The previous `kingpranav21.stealth` listing is deprecated — install **Stealth GitHub** for updates, trial, and Pro.
+
+## Pro & 14-day trial
+
+Stealth GitHub includes a **14-day free trial** (full features). After that, you need **Pro** via [Lemon Squeezy](https://stealth-github-pro.lemonsqueezy.com/checkout/buy/7f8803b4-d9c5-4788-92a7-356b0fb2d12b).
+
+| Phase | What you can do |
+|--------|------------------|
+| **Trial (14 days)** | Open repos, edit, push, hydrate — everything |
+| **After trial (no license)** | Sign in, dashboard, **Upgrade**, **Activate License Key** only — no open repo, save, hydrate, or sync |
+| **Pro (paid)** | Full access again with your license key |
+
+**After purchase**
+
+1. Lemon Squeezy emails a **license key**.
+2. **Cmd+Shift+P** → **Stealth GitHub: Activate License Key** → paste the key.
+
+**Subscriptions:** If you sell a subscription on Lemon, license validation follows the subscription — cancelled subs stop validating on the next check (about every 24 hours).
+
+Setup for publishers: [docs/lemonsqueezy-setup.md](./docs/lemonsqueezy-setup.md)
 
 ## Terminal (Stealth CLI)
 
@@ -164,6 +187,10 @@ Install globally after build: `npm link` (optional), then run `stealth` directly
 | `stealth.stubGuard` | `true` | Warn when stub content is in the editor |
 | `stealth.bloatBlocklist` | on | Block hydrating huge paths (`node_modules`, etc.) |
 | `stealth.checkRemoteBeforeSave` | `true` | Warn if the file changed on GitHub before save |
+| `stealth.licensing.enabled` | `true` | Trial + Pro gate (set `false` to disable paywall) |
+| `stealth.trialDays` | `14` | Free trial length per machine |
+| `stealth.checkoutUrl` | [Lemon checkout](https://stealth-github-pro.lemonsqueezy.com/checkout/buy/7f8803b4-d9c5-4788-92a7-356b0fb2d12b) | **Upgrade to Pro** button |
+| `stealth.licensing.provider` | `lemonsqueezy` | Validate keys with Lemon Squeezy (no custom server) |
 
 Local data: `~/.stealth/indexes/` and `~/.stealth/workspaces/`.
 
@@ -186,7 +213,7 @@ Run from the repo root after `git clone` and `npm install`:
 | `npm run build` | Compile shared + extension + CLI |
 | `npm run stealth -- <cmd>` | Stealth CLI (`push`, `write`, `touch`, `cat`) |
 | `npm run smoke` | Full pipeline: build, package VSIX, manifest checks |
-| `npm run package` | Build and create `packages/extension/stealth-*.vsix` |
+| `npm run package` | Build and create `packages/extension/stealth-github-*.vsix` |
 | `npm run demo-gif` | Regenerate `docs/stealth-demo.gif` (needs Playwright) |
 
 Example — clone, test, package:

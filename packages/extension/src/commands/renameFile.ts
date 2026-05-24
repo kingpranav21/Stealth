@@ -18,11 +18,16 @@ import {
 import { closeEditorsForFile, removeMirroredFile } from "../mirror";
 import { getActiveStealthConfig } from "../workspace/config";
 import type { RemoteTreeProvider } from "../tree/remoteTreeProvider";
+import { requireProAccess } from "../licensing/access";
 
 export async function renameRemoteFile(
   uri?: vscode.Uri,
   treeProvider?: RemoteTreeProvider
 ): Promise<void> {
+  if (!(await requireProAccess("renaming files on GitHub"))) {
+    return;
+  }
+
   const active = await getActiveStealthConfig();
   if (!active) {
     void vscode.window.showWarningMessage("No Stealth workspace open.");

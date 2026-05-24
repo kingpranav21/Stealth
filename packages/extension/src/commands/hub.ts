@@ -12,9 +12,9 @@ export async function showStealthHub(
     : "No workspace";
 
   const items: vscode.QuickPickItem[] = [
-    { label: "$(dashboard) Stealth Dashboard", description: "Disk, API, Stub Guard" },
+    { label: "$(dashboard) Dashboard", description: "Disk, API, Stub Guard" },
     { label: "$(repo) Open GitHub Repository…" },
-    { label: "$(folder-opened) Switch Stealth Workspace…", description: "Recent ~/.stealth workspaces" },
+    { label: "$(folder-opened) Switch Workspace…", description: "Recent ~/.stealth workspaces" },
   ];
 
   if (active) {
@@ -41,10 +41,14 @@ export async function showStealthHub(
     );
   }
 
-  items.push({ label: "$(sign-in) Sign in to GitHub" });
+  items.push(
+    { label: "$(key) License Status", description: "Trial or Pro" },
+    { label: "$(link-external) Upgrade to Pro…" },
+    { label: "$(sign-in) Sign in to GitHub" }
+  );
 
   const pick = await vscode.window.showQuickPick(items, {
-    title: "Stealth",
+    title: "Stealth GitHub",
     placeHolder: repoLabel,
   });
   if (!pick) {
@@ -52,9 +56,9 @@ export async function showStealthHub(
   }
 
   const map: Record<string, string> = {
-    "Stealth Dashboard": "stealth.dashboard",
+    "Dashboard": "stealth.dashboard",
     "Open GitHub": "stealth.openRepository",
-    "Switch Stealth": "stealth.switchWorkspace",
+    "Switch Workspace": "stealth.switchWorkspace",
     "Find File": "stealth.findFile",
     "Codespace": "stealth.openInCodespace",
     "GitHub.com": "stealth.openOnGitHub",
@@ -74,6 +78,8 @@ export async function showStealthHub(
     "Cache": "stealth.cacheActions",
     "Copy file for AI": "stealth.copyForAi",
     "Refresh Remote": "stealth.refreshIndex",
+    "License Status": "stealth.licenseStatus",
+    "Upgrade to Pro": "stealth.manageSubscription",
     "Sign in": "stealth.signIn",
   };
 

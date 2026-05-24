@@ -11,11 +11,19 @@ import { updateStatusBar } from "../statusBar";
 import { refreshDashboardIfOpen } from "../dashboard/panel";
 import { getActiveStealthConfig } from "../workspace/config";
 import { isBloatPath, bloatBlockMessage } from "../guard/bloatBlocklist";
+import { hasProAccess, requireProAccess } from "../licensing/access";
 
 export async function hydrateRemoteFile(
   relativePath: string,
   options?: { silent?: boolean }
 ): Promise<boolean> {
+  if (!(await hasProAccess())) {
+    if (!options?.silent) {
+      await requireProAccess("loading files from GitHub");
+    }
+    return false;
+  }
+
   const active = await getActiveStealthConfig();
   if (!active) {
     return false;
@@ -64,6 +72,10 @@ export async function hydrateRemoteFile(
 }
 
 export async function openRemoteFile(relativePath: string): Promise<void> {
+  if (!(await requireProAccess("opening files"))) {
+    return;
+  }
+
   const active = await getActiveStealthConfig();
   if (!active) {
     void vscode.window.showErrorMessage("Open a Stealth workspace first.");

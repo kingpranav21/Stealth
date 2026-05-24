@@ -5,6 +5,7 @@ import { getGitHubToken } from "../auth";
 import { listDirectory } from "../github/client";
 import { loadIndexByPath } from "../index/store";
 import { getActiveStealthConfig } from "../workspace/config";
+import { hasProAccess } from "../licensing/access";
 
 export class RemoteTreeItem extends vscode.TreeItem {
   constructor(
@@ -205,6 +206,10 @@ export class RemoteTreeProvider implements vscode.TreeDataProvider<RemoteTreeIte
     repo: import("@stealth/shared").RepoRef,
     dirPath: string
   ): Promise<RemoteTreeItem[]> {
+    if (!(await hasProAccess())) {
+      return [];
+    }
+
     const cacheKey = dirPath || "/";
     let entries = this.dirCache.get(cacheKey);
     if (!entries) {

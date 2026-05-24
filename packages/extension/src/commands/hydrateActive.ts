@@ -4,8 +4,13 @@ import { getActiveStealthConfig } from "../workspace/config";
 import { relativePathInWorkspace } from "./hydrateDocument";
 import { hydrateRemoteFile } from "./openFile";
 import { applyDiskContentToOpenEditors } from "./hydrateDocument";
+import { requireProAccess } from "../licensing/access";
 
 export async function hydrateActiveFile(): Promise<void> {
+  if (!(await requireProAccess("hydrating files from GitHub"))) {
+    return;
+  }
+
   const active = await getActiveStealthConfig();
   const editor = vscode.window.activeTextEditor;
   if (!active || !editor) {

@@ -13,7 +13,7 @@ npm run build
 echo "→ package"
 npm run package
 
-VSIX="$(ls -t packages/extension/stealth-*.vsix 2>/dev/null | head -1)"
+VSIX="$(ls -t packages/extension/stealth-github-*.vsix 2>/dev/null | head -1)"
 if [[ -z "$VSIX" ]]; then
   echo "FAIL: no VSIX produced"
   exit 1

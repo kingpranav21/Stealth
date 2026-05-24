@@ -4,9 +4,14 @@ import { getGitHubToken } from "../auth";
 import { getFileSha } from "../index/fileShas";
 import { resolveActiveStealthFile } from "../workspace/activeFile";
 import { hydrateRemoteFile } from "./openFile";
+import { requireProAccess } from "../licensing/access";
 
 /** Side-by-side diff: GitHub version vs your editor buffer. */
 export async function compareWithRemote(): Promise<void> {
+  if (!(await requireProAccess("comparing with GitHub"))) {
+    return;
+  }
+
   const file = await resolveActiveStealthFile();
   if (!file) {
     return;
@@ -51,6 +56,10 @@ export async function compareWithRemote(): Promise<void> {
 
 /** Overwrite local editor with the latest version from GitHub. */
 export async function pullFromGitHub(): Promise<void> {
+  if (!(await requireProAccess("pulling from GitHub"))) {
+    return;
+  }
+
   const file = await resolveActiveStealthFile();
   if (!file) {
     return;

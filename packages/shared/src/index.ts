@@ -90,3 +90,4 @@ export {
 } from "./bloat";
 export { STUB_MARKER, isStubContent, documentTextIsStub } from "./stub";
 export { formatBytes, cacheMaxBytesFromMb, totalCacheBytes } from "./format";
+export { trialDaysLeft, isTrialActive } from "./trial";

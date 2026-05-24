@@ -13,6 +13,7 @@ import { reloadStealthWorkspace } from "../workspace/reload";
 import { updateStatusBar } from "../statusBar";
 import { focusRemoteFilesView } from "../tree/remoteTreeProvider";
 import type { RemoteTreeProvider } from "../tree/remoteTreeProvider";
+import { requireProAccess } from "../licensing/access";
 
 export async function openRepoFlow(
   context: vscode.ExtensionContext,
@@ -56,6 +57,10 @@ export async function openGitHubRepository(
   context: vscode.ExtensionContext,
   treeProvider?: RemoteTreeProvider
 ): Promise<void> {
+  if (!(await requireProAccess("opening a GitHub repository"))) {
+    return;
+  }
+
   const recent = getRecentRepos(context);
   const picks: vscode.QuickPickItem[] = recent.map((r) => ({
     label: `${r.owner}/${r.repo}`,

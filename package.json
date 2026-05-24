@@ -5,10 +5,10 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspace @stealth/shared && npm run build --workspace stealth && npm run build --workspace @stealth/cli",
+    "build": "npm run build --workspace @stealth/shared && npm run build --workspace stealth-github && npm run build --workspace @stealth/cli",
     "stealth": "node packages/cli/dist/cli.js",
-    "watch": "npm run watch --workspace stealth",
-    "package": "npm run build && npm run package --workspace=stealth",
+    "watch": "npm run watch --workspace stealth-github",
+    "package": "npm run build && npm run package --workspace=stealth-github",
     "test": "bash scripts/test.sh",
     "test:unit": "npm run build --workspace @stealth/shared && node --test --test-reporter spec test/unit/*.test.mjs",
     "smoke": "bash scripts/smoke-check.sh",

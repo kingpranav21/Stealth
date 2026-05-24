@@ -22,6 +22,8 @@ describe("extension manifest", () => {
   it("has version and publisher", () => {
     assert.match(pkg.version, /^\d+\.\d+\.\d+$/);
     assert.equal(pkg.publisher, "kingpranav21");
+    assert.equal(pkg.name, "stealth-github");
+    assert.equal(pkg.displayName, "Stealth GitHub");
   });
 
   it("registers core commands", () => {

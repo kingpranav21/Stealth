@@ -10,6 +10,7 @@ import { getActiveStealthConfig } from "../workspace/config";
 import { applyRepoBranch } from "../workspace/applyBranch";
 import { addRecentRepo } from "../recentRepos";
 import type { RemoteTreeProvider } from "../tree/remoteTreeProvider";
+import { requireProAccess } from "../licensing/access";
 
 const BRANCH_NAME_RE = /^[a-zA-Z0-9._\-/]+$/;
 
@@ -34,6 +35,10 @@ export async function switchGitHubBranch(
   context: vscode.ExtensionContext,
   treeProvider: RemoteTreeProvider
 ): Promise<void> {
+  if (!(await requireProAccess("switching branches"))) {
+    return;
+  }
+
   const active = await getActiveStealthConfig();
   if (!active) {
     void vscode.window.showWarningMessage(
@@ -112,6 +117,10 @@ export async function createGitHubBranch(
   context: vscode.ExtensionContext,
   treeProvider: RemoteTreeProvider
 ): Promise<void> {
+  if (!(await requireProAccess("creating branches"))) {
+    return;
+  }
+
   const active = await getActiveStealthConfig();
   if (!active) {
     void vscode.window.showWarningMessage(

@@ -24,7 +24,7 @@ step "build @stealth/shared"
 npm run build --workspace @stealth/shared
 
 step "build extension"
-npm run build --workspace stealth
+npm run build --workspace stealth-github
 ok "extension build"
 
 step "build CLI"
