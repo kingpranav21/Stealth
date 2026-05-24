@@ -1,3 +1,6 @@
+import * as os from "os";
+import * as path from "path";
+
 export interface RepoRef {
   owner: string;
   repo: string;
@@ -54,6 +57,22 @@ export function workspaceId(repo: RepoRef): string {
   return `${repo.owner}-${repo.repo}-${repo.branch}`.replace(/[^a-zA-Z0-9._-]/g, "_");
 }
 
+export function stealthHome(): string {
+  return path.join(os.homedir(), ".stealth");
+}
+
+export function workspacesDir(): string {
+  return path.join(stealthHome(), "workspaces");
+}
+
+export function indexesDir(): string {
+  return path.join(stealthHome(), "indexes");
+}
+
+export function workspaceRoot(repo: RepoRef): string {
+  return path.join(workspacesDir(), workspaceId(repo));
+}
+
 export function parseRepoInput(input: string): RepoRef | undefined {
   const trimmed = input.trim().replace(/^https?:\/\/github\.com\//i, "").replace(/\.git$/, "");
   const parts = trimmed.split("/").filter(Boolean);
@@ -63,3 +82,11 @@ export function parseRepoInput(input: string): RepoRef | undefined {
   const [owner, repo, branch] = parts;
   return { owner, repo, branch: branch ?? "" };
 }
+
+export {
+  DEFAULT_BLOAT_PATTERNS,
+  matchesBloatPath,
+  bloatBlockMessage,
+} from "./bloat";
+export { STUB_MARKER, isStubContent, documentTextIsStub } from "./stub";
+export { formatBytes, cacheMaxBytesFromMb, totalCacheBytes } from "./format";

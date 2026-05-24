@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { STUB_MARKER } from "../explorer/stubSync";
+import { documentTextIsStub } from "@stealth/shared";
 import { getActiveStealthConfig } from "../workspace/config";
 import { relativePathInWorkspace } from "../commands/hydrateDocument";
 
@@ -9,13 +9,7 @@ let stubStatusItem: vscode.StatusBarItem | undefined;
 let decorationType: vscode.TextEditorDecorationType | undefined;
 
 export function documentIsStub(doc: vscode.TextDocument): boolean {
-  const text = doc.getText();
-  const marker = STUB_MARKER.trim();
-  return (
-    text === STUB_MARKER ||
-    text === `${marker}\n` ||
-    text.startsWith(marker)
-  );
+  return documentTextIsStub(doc.getText());
 }
 
 export function registerStubGuard(context: vscode.ExtensionContext): void {

@@ -1,10 +1,9 @@
 import * as fs from "fs/promises";
 import * as path from "path";
-import { IndexEntry } from "@stealth/shared";
+import { IndexEntry, STUB_MARKER, isStubContent } from "@stealth/shared";
 import { getMaxExplorerStubs } from "../workspace/flags";
 
-export const STUB_MARKER =
-  "# Stealth remote file — open or save to load from GitHub.\n";
+export { STUB_MARKER, isStubContent };
 
 /**
  * Creates empty placeholder files so the normal Explorer shows the repo tree.
@@ -46,7 +45,3 @@ export async function writeStub(
   await fs.writeFile(fullPath, STUB_MARKER, "utf-8");
 }
 
-export function isStubContent(buffer: Uint8Array | Buffer): boolean {
-  const text = Buffer.from(buffer).toString("utf-8");
-  return text === STUB_MARKER || text.startsWith(STUB_MARKER.trim());
-}

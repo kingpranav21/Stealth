@@ -1,7 +1,12 @@
 import * as fs from "fs/promises";
 import * as path from "path";
 import * as vscode from "vscode";
-import { STEALTH_DIR } from "@stealth/shared";
+import {
+  STEALTH_DIR,
+  cacheMaxBytesFromMb,
+  formatBytes,
+  totalCacheBytes as sumCacheFileBytes,
+} from "@stealth/shared";
 import { isStubContent, writeStub } from "../explorer/stubSync";
 import { isStealthInternalPath } from "../index/fileShas";
 import { readWorkspaceConfig } from "../workspace/config";
@@ -44,7 +49,7 @@ export function getCacheMaxBytes(): number {
   const mb = vscode.workspace
     .getConfiguration("stealth")
     .get<number>("cacheMaxMb", 500);
-  return Math.max(1, mb) * 1024 * 1024;
+  return cacheMaxBytesFromMb(mb);
 }
 
 export async function touchCachedFile(
@@ -73,8 +78,10 @@ export async function removeCacheEntry(
 }
 
 export function totalCacheBytes(meta: CacheMeta): number {
-  return Object.values(meta.files).reduce((sum, e) => sum + e.bytes, 0);
+  return sumCacheFileBytes(meta.files);
 }
+
+export { formatBytes };
 
 /** Scan disk and sync meta for hydrated (non-stub) files. */
 export async function reconcileCacheMeta(workspaceRoot: string): Promise<CacheMeta> {
@@ -199,12 +206,3 @@ export async function evictCacheIfNeeded(
   return { evicted, freedBytes, remainingBytes: total };
 }
 
-export function formatBytes(n: number): string {
-  if (n < 1024) {
-    return `${n} B`;
-  }
-  if (n < 1024 * 1024) {
-    return `${(n / 1024).toFixed(1)} KB`;
-  }
-  return `${(n / (1024 * 1024)).toFixed(1)} MB`;
-}

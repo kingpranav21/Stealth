@@ -1,6 +1,7 @@
 # Stealth — GitHub repos in VS Code & Cursor without `git clone`
 
-[![Open VSX](https://img.shields.io/open-vsx/v/kingpranav21/stealth?label=Open%20VSX)](https://open-vsx.org/extension/kingpranav21/stealth)
+[![Open VSX version](https://img.shields.io/open-vsx/v/kingpranav21/stealth?label=Open%20VSX)](https://open-vsx.org/extension/kingpranav21/stealth)
+[![Open VSX downloads](https://img.shields.io/badge/dynamic/json?url=https://open-vsx.org/api/kingpranav21/stealth&query=%24.downloadCount&label=downloads&logo=open-vsx&labelColor=555&color=2dd4bf&cacheSeconds=300)](https://open-vsx.org/extension/kingpranav21/stealth)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.85-0098FF?logo=visualstudiocode&logoColor=white)](https://code.visualstudio.com/)
 
@@ -18,6 +19,7 @@ Works in **Cursor**, **VS Code**, **VSCodium**, and other editors that use the [
 - [Features](#features)
 - [Settings](#settings)
 - [Stealth vs git clone](#stealth-vs-git-clone)
+- [Terminal commands](#terminal-commands)
 - [Development](#development)
 - [Contributing](#contributing)
 - [License](#license)
@@ -63,6 +65,48 @@ In the editor: **Cmd+Shift+P** → **Extensions: Install from VSIX…** → sele
 4. Edit a file and press **Cmd+S** / **Ctrl+S** — changes push to GitHub via the Contents API.
 5. Click **Stealth** in the **status bar** (bottom-right) for the **Dashboard** (cache, API quota, Stub Guard).
 
+## Terminal (Stealth CLI)
+
+Push to GitHub from the shell — same workspaces as the editor (`~/.stealth/workspaces/`).
+
+**Auth** (once per machine):
+
+```bash
+export GITHUB_TOKEN=$(gh auth token)   # or set GITHUB_TOKEN / STEALTH_GITHUB_TOKEN
+npm run build
+npm run stealth -- auth
+```
+
+**From a Stealth workspace folder** (open the repo in Cursor first, or `cd` into its workspace):
+
+```bash
+cd ~/.stealth/workspaces/<workspace-id>
+
+# Pipe content → create/update on GitHub
+echo '# Deploy notes' | npm run stealth -- write docs/deploy.md -m "Add deploy notes"
+
+# Push files already on disk
+npm run stealth -- push src/config.ts package.json
+
+# Create empty file on GitHub
+npm run stealth -- touch scripts/run.sh -m "Add run script"
+
+# Read remote file
+npm run stealth -- cat README.md
+
+# List workspaces
+npm run stealth -- workspaces
+```
+
+Install globally after build: `npm link` (optional), then run `stealth` directly.
+
+| CLI command | Saves to GitHub? | Saves locally under `~/.stealth`? |
+|-------------|------------------|----------------------------------|
+| `stealth write <path>` | Yes | Yes |
+| `stealth push <file…>` | Yes | Uses existing file |
+| `stealth touch <path>` | Yes (empty file) | Yes |
+| `stealth cat <path>` | No (read only) | No |
+
 ## Features
 
 - **No local `.git`** — remote workspace backed by GitHub APIs
@@ -94,17 +138,42 @@ Local data: `~/.stealth/indexes/` and `~/.stealth/workspaces/`.
 **Choose `git clone`** for local builds, tests, and git CLI workflows.  
 **Choose Codespaces** for a full cloud dev box.
 
+## Terminal commands
+
+Run from the repo root after `git clone` and `npm install`:
+
+| Command | What it does |
+|---------|----------------|
+| `npm test` | Unit tests + extension build (CI-safe, ~30s) |
+| `npm run test:unit` | Unit tests only (shared logic + manifest) |
+| `npm run build` | Compile shared + extension + CLI |
+| `npm run stealth -- <cmd>` | Stealth CLI (`push`, `write`, `touch`, `cat`) |
+| `npm run smoke` | Full pipeline: build, package VSIX, manifest checks |
+| `npm run package` | Build and create `packages/extension/stealth-*.vsix` |
+| `npm run demo-gif` | Regenerate `docs/stealth-demo.gif` (needs Playwright) |
+
+Example — clone, test, package:
+
+```bash
+git clone https://github.com/pranavahuja/stealth.git
+cd stealth
+npm install
+npm test
+npm run package
+```
+
+Requires **Node.js 18+** (20+ recommended). Tests use the built-in `node:test` runner — no extra test framework.
+
 ## Development
 
 ```bash
 npm install
-npm run build
-npm run smoke    # build + package + sanity checks
+npm test
 ```
 
-Press **F5** and select **Run Stealth Extension** (Extension Development Host).
+Press **F5** → **Run Stealth Extension** (Extension Development Host) for manual testing in the editor.
 
-Regenerate the README demo GIF: `npm run demo-gif`
+Optional: `STEALTH_SMOKE=1 npm test` then `npm run smoke` for a release VSIX check.
 
 ## Contributing
 
