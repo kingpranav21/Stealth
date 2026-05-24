@@ -226,7 +226,7 @@ npm test
 npm run package
 ```
 
-Requires **Node.js 18+** (20+ recommended). Tests use the built-in `node:test` runner — no extra test framework.
+Requires **Node.js 18+** (20+ recommended). Tests use the built-in `node:test` runner — no extra test framework
 
 ## Development
 
