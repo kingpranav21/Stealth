@@ -29,7 +29,7 @@ Environment:
   STEALTH_WORKSPACE               Default workspace root
 
 Examples:
-  cd ~/.stealth/workspaces/pranavahuja-stealth-main
+  cd ~/.stealth/workspaces/kingpranav21-stealth-main
   echo '# Hi' | stealth write docs/note.md -m 'Add note'
   stealth push src/foo.ts
   stealth touch scripts/new.sh && chmod +x scripts/new.sh && stealth push scripts/new.sh
@@ -97,7 +97,7 @@ async function main(): Promise<void> {
     const list = await listWorkspaces();
     if (!list.length) {
       console.log(`No workspaces under ${stealthHomePath()}/workspaces/`);
-      console.log("Open a repo in Cursor: Stealth → Open GitHub Repository…");
+      console.log("Open a repo in the editor: Stealth → Open GitHub Repository…");
       return;
     }
     for (const ws of list) {

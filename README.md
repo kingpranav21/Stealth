@@ -1,13 +1,13 @@
-# Stealth — GitHub repos in VS Code & Cursor without `git clone`
+# Stealth — GitHub repos in VS Code without `git clone`
 
 [![Open VSX version](https://img.shields.io/open-vsx/v/kingpranav21/stealth?label=Open%20VSX)](https://open-vsx.org/extension/kingpranav21/stealth)
 [![Open VSX downloads](https://img.shields.io/badge/dynamic/json?url=https://open-vsx.org/api/kingpranav21/stealth&query=%24.downloadCount&label=downloads&logo=open-vsx&labelColor=555&color=2dd4bf&cacheSeconds=300)](https://open-vsx.org/extension/kingpranav21/stealth)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.85-0098FF?logo=visualstudiocode&logoColor=white)](https://code.visualstudio.com/)
 
-**Stealth** is a [VS Code](https://code.visualstudio.com/) / [Cursor](https://cursor.com/) extension that lets you **open, browse, edit, and save GitHub repositories without a full local clone**. It builds a shallow remote index, hydrates only the files you open, and enforces a disk budget under `~/.stealth/` — built for limited SSD space, many repos, and fast “open and fix” workflows.
+**Stealth** is a [VS Code](https://code.visualstudio.com/) extension that lets you **open, browse, edit, and save GitHub repositories without a full local clone**. It builds a shallow remote index, hydrates only the files you open, and enforces a disk budget under `~/.stealth/` — built for limited SSD space, many repos, and fast “open and fix” workflows.
 
-Works in **Cursor**, **VS Code**, **VSCodium**, and other editors that use the [Open VSX](https://open-vsx.org/) marketplace.
+Works in **VS Code**, **VSCodium**, and other editors that use the [Open VSX](https://open-vsx.org/) marketplace.
 
 ![Stealth extension demo: open a GitHub repo, browse remote files, edit, and push with Cmd+S](./docs/stealth-demo.gif)
 
@@ -15,7 +15,7 @@ Works in **Cursor**, **VS Code**, **VSCodium**, and other editors that use the [
 
 - [Why Stealth](#why-stealth)
 - [Install](#install)
-- [Quick start](#quick-start)
+- [How to use (after install)](#how-to-use-after-install)
 - [Features](#features)
 - [Settings](#settings)
 - [Stealth vs git clone](#stealth-vs-git-clone)
@@ -37,7 +37,7 @@ Use Stealth when you need **lightweight GitHub editing** on your machine. Use a 
 
 ## Install
 
-### Open VSX (recommended for Cursor & VSCodium)
+### Open VSX (recommended for VSCodium and VS Code–compatible editors)
 
 1. Open **Extensions** (`Cmd+Shift+X` / `Ctrl+Shift+X`)
 2. Search **`Stealth`**
@@ -49,7 +49,7 @@ https://open-vsx.org/extension/kingpranav21/stealth
 ### Build from source
 
 ```bash
-git clone https://github.com/pranavahuja/stealth.git
+git clone https://github.com/kingpranav21/stealth.git
 cd stealth
 npm install
 npm run package
@@ -57,13 +57,50 @@ npm run package
 
 In the editor: **Cmd+Shift+P** → **Extensions: Install from VSIX…** → select `packages/extension/stealth-*.vsix` → **Reload Window**.
 
-## Quick start
+## How to use (after install)
 
-1. Run **`Stealth: Sign in to GitHub`** (uses the editor’s GitHub authentication).
-2. Run **`Stealth: Open GitHub Repository…`** and pick `owner/repo` (you need push access to save).
-3. In the sidebar, open **Remote Repository** and expand folders / open files.
-4. Edit a file and press **Cmd+S** / **Ctrl+S** — changes push to GitHub via the Contents API.
-5. Click **Stealth** in the **status bar** (bottom-right) for the **Dashboard** (cache, API quota, Stub Guard).
+### 1. Reload
+
+**Cmd+Shift+P** → **Developer: Reload Window** after installing.
+
+Use only **one** Stealth install (Open VSX **or** a local VSIX/dev build — not both).
+
+### 2. Sign in
+
+**Cmd+Shift+P** → **`Stealth: Sign in to GitHub`**
+
+### 3. Open a repo
+
+**Cmd+Shift+P** → **`Stealth: Open GitHub Repository…`**
+
+Enter `owner/repo` (e.g. `kingpranav21/stealth`). You need **push access** to save.
+
+### 4. Browse and open files
+
+- Sidebar → **Remote Repository**  
+- Or **Stealth: Find File…** (`Cmd+Alt+F`)
+
+Files load from GitHub on first open (hydration). Stubs in Explorer are replaced when you open them.
+
+### 5. Edit and push
+
+Edit → **Cmd+S** / **Ctrl+S** → wait for **“Pushed to GitHub”**.
+
+### 6. Dashboard
+
+Click **Stealth** in the **status bar** (bottom-right) or run **`Stealth: Stealth Dashboard`**.
+
+### Command cheat sheet
+
+| Action | Command palette |
+|--------|-----------------|
+| Open repo | `Stealth: Open GitHub Repository…` |
+| Find file | `Stealth: Find File…` |
+| Reload file from GitHub | `Stealth: Hydrate Active File from GitHub` |
+| All commands | `Stealth: Stealth Menu…` |
+| Disk / cache | `Stealth: Cache Actions…` or Dashboard |
+
+Full walkthrough (same as Open VSX listing): [packages/extension/README.md](./packages/extension/README.md)
 
 ## Terminal (Stealth CLI)
 
@@ -77,7 +114,7 @@ npm run build
 npm run stealth -- auth
 ```
 
-**From a Stealth workspace folder** (open the repo in Cursor first, or `cd` into its workspace):
+**From a Stealth workspace folder** (open the repo in the editor first, or `cd` into its workspace):
 
 ```bash
 cd ~/.stealth/workspaces/<workspace-id>
@@ -155,7 +192,7 @@ Run from the repo root after `git clone` and `npm install`:
 Example — clone, test, package:
 
 ```bash
-git clone https://github.com/pranavahuja/stealth.git
+git clone https://github.com/kingpranav21/stealth.git
 cd stealth
 npm install
 npm test
@@ -177,7 +214,7 @@ Optional: `STEALTH_SMOKE=1 npm test` then `npm run smoke` for a release VSIX che
 
 ## Contributing
 
-Bug reports and PRs are welcome: [github.com/Kingpranav21/stealth/issues](https://github.com/Kingpranav21/stealth/issues)
+Bug reports and PRs are welcome: [github.com/kingpranav21/stealth/issues](https://github.com/kingpranav21/stealth/issues)
 
 ## License
 

@@ -31,8 +31,8 @@ describe("parseRepoInput", () => {
 
   it("parses GitHub URLs", () => {
     assert.deepEqual(
-      parseRepoInput("https://github.com/pranavahuja/stealth.git"),
-      { owner: "pranavahuja", repo: "stealth", branch: "" }
+      parseRepoInput("https://github.com/kingpranav21/stealth.git"),
+      { owner: "kingpranav21", repo: "stealth", branch: "" }
     );
   });
 

@@ -85,7 +85,7 @@ export async function resolveWorkspace(options: {
   }
 
   throw new Error(
-    "Not inside a Stealth workspace. Open a repo in Cursor first, or:\n" +
+    "Not inside a Stealth workspace. Open a repo in the editor first, or:\n" +
       `  cd ~/.stealth/workspaces/<id>\n` +
       "  stealth --workspace <id> push <file>\n" +
       "  stealth workspaces"

@@ -6,7 +6,7 @@ import { hydrateRemoteFile } from "./openFile";
 
 /**
  * Ensures the active file is hydrated, then copies full text for pasting into AI chat.
- * Solves: pasting a stub line into Cursor chat by mistake.
+ * Solves: pasting a stub line into an AI chat by mistake.
  */
 export async function copyHydratedFileForAi(): Promise<void> {
   const active = await getActiveStealthConfig();

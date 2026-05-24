@@ -26,7 +26,7 @@ export function registerStubGuard(context: vscode.ExtensionContext): void {
   );
   stubStatusItem.command = "stealth.hydrateActiveFile";
   stubStatusItem.tooltip =
-    "This file is a Stealth stub — Cursor AI and search see placeholder text, not real code. Click to hydrate.";
+    "This file is a Stealth stub — AI assistants and search see placeholder text, not real code. Click to hydrate.";
   context.subscriptions.push(decorationType, stubStatusItem);
 
   const refresh = () => void updateStubGuardUi();

@@ -1,22 +1,21 @@
 {
   "name": "stealth",
   "displayName": "Stealth",
-  "description": "Open GitHub repos in Cursor without a full clone — only opened files use disk.",
-  "version": "0.10.1",
+  "description": "Open GitHub repos in VS Code without a full clone — only opened files use disk.",
+  "version": "0.10.2",
   "publisher": "kingpranav21",
   "icon": "icon.png",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pranavahuja/stealth"
+    "url": "https://github.com/kingpranav21/stealth.git"
   },
-  "homepage": "https://github.com/pranavahuja/stealth#readme",
+  "homepage": "https://github.com/kingpranav21/stealth#readme",
   "bugs": {
-    "url": "https://github.com/pranavahuja/stealth/issues"
+    "url": "https://github.com/kingpranav21/stealth/issues"
   },
   "keywords": [
     "github",
-    "cursor",
     "vscode",
     "vscodium",
     "open-vsx",

@@ -25,7 +25,7 @@ export async function signInToGitHub(): Promise<boolean> {
     return true;
   }
   void vscode.window.showErrorMessage(
-    "GitHub sign-in was cancelled or is unavailable. Install/enable GitHub authentication in Cursor."
+    "GitHub sign-in was cancelled or is unavailable. Install/enable GitHub authentication in your editor."
   );
   return false;
 }
