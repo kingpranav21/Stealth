@@ -237,7 +237,7 @@ npm test
 
 Press **F5** → **Run Stealth Extension** (Extension Development Host) for manual testing in the editor.
 
-Optional: `STEALTH_SMOKE=1 npm test` then `npm run smoke` for a release VSIX check.
+Optional: `STEALTH_SMOKE=1 npm test` then `npm run smoke` for a release VSIX check
 
 ## Contributing
 
